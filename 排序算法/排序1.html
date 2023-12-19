@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function bubbleSort(ary) {
+        for (let i = ary.length - 2; i >= 0; i--) {
+          let flag = false;
+          for (let j = 0; j <= i; j++) {
+            if (ary[j] > ary[j + 1]) {
+              let t = ary[j];
+              ary[j] = ary[j + 1];
+              ary[j + 1] = t;
+              flag = true;
+            }
+          }
+          if (flag === false) {
+            break;
+          }
+        }
+
+        return ary;
+      }
+    </script>
+  </body>
+</html>

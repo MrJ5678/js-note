@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      em:nth-child(2n) {
+        background-color: lightblue;
+        font-style: normal;
+      }
+      em:nth-child(2n - 1) {
+        background-color: lightseagreen;
+        font-style: normal;
+      }
+      span {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    正则表达式:<input type="text" id="regInput" />
+    <input type="checkbox" checked id="flagGlobal" />global
+    <input type="checkbox" id="flagMul" />mul
+    <input type="checkbox" id="flagInsans" />insans
+    <br />
+    测试字符串:
+    <button onclick="run()">run</button>
+    <br />
+    <textarea name="" id="strInput" cols="30" rows="10">
+abcdefoobarbazfooba</textarea
+    >
+    <br />
+    结果:
+    <div id="resultDiv"></div>
+
+    <script>
+      function formatRegStr(s) {
+        let reg = /[^\w\s]/g;
+        return s.replace(reg, '\\$&');
+      }
+      function run() {
+        let regStr = document.getElementById('regInput').value;
+        let str = document.getElementById('strInput').value;
+        let reg = null;
+        try {
+          reg = new RegExp(regStr, 'g');
+        } catch (error) {
+          // console.dir(error);
+          resultDiv.innerHTML = '<span>' + error.message + '</span>';
+          return;
+        }
+        let match = null;
+        let result = '';
+        let preLastIndex = 0;
+        while ((match = reg.exec(str))) {
+          result += str.slice(preLastIndex, match.index);
+          result += '<em>' + match[0] + '</em>';
+          preLastIndex = reg.lastIndex;
+        }
+        result += str.slice(preLastIndex);
+        // console.log(result);
+        resultDiv.innerHTML = result;
+      }
+    </script>
+  </body>
+</html>

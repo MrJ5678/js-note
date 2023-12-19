@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <style>
+      div {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 50px;
+        height: 50px;
+        background-color: violet;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div></div>
+
+    <script>
+      let vx = 0;
+      let vy = 0;
+      let x = 0;
+      let y = 0;
+      let uppressed = false;
+      let downpressed = false;
+      let leftpressed = false;
+      let rightpressed = false;
+      let div = document.querySelector("div");
+
+      requestAnimationFrame(function animate(time) {
+        x += vx;
+        y += vy;
+        div.style.left = x + "px";
+        div.style.top = y + "px";
+        requestAnimationFrame(animate);
+      });
+
+      window.addEventListener("keydown", function (e) {
+        switch (e.key) {
+          case "ArrowUp":
+            vy = -5;
+            uppressed = true;
+            break;
+          case "ArrowDown":
+            vy = 5;
+            downpressed = true;
+            break;
+          case "ArrowLeft":
+            vx = -5;
+            leftpressed = true;
+            break;
+          case "ArrowRight":
+            vx = 5;
+            rightpressed = true;
+            break;
+        }
+      });
+
+      window.addEventListener("keyup", function (e) {
+        switch (e.key) {
+          case "ArrowUp":
+            uppressed = false;
+            if (downpressed) {
+              vy = 5;
+            } else {
+              vy = 0;
+            }
+            break;
+          case "ArrowDown":
+            downpressed = false;
+            if (uppressed) {
+              vy = -5;
+            } else {
+              vy = 0;
+            }
+            break;
+          case "ArrowLeft":
+            leftpressed = false;
+            if (rightpressed) {
+              vx = 5;
+            } else {
+              vx = 0;
+            }
+            break;
+          case "ArrowRight":
+            rightpressed = false;
+            if (leftpressed) {
+              vx = -5;
+            } else {
+              vx = 0;
+            }
+            break;
+        }
+      });
+    </script>
+  </body>
+</html>

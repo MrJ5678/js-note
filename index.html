@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 400px;
+        height: 250px;
+        border: 2px solid darkblue;
+        background-color: blue;
+        color: white;
+        font: 16px "Zilla", "Open Sans", "Helvetica", "Arial", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="parentElement" onclick="func(event)">
+      <span id="childElement">foo bar</span>
+    </div>
+
+    <!-- <script>
+      // Create a new, plain <span> element
+      let sp1 = document.createElement('span');
+
+      // Get the reference element
+      let sp2 = document.getElementById('childElement');
+      // Get the parent element
+      let parentDiv = sp2.parentNode;
+
+      // Insert the new element into before sp2
+      let a = parentDiv.insertBefore(sp1, sp2);
+      console.log(a);
+    </script> -->
+    <!-- <script type="xx">
+      let div = document.querySelector('#parentElement');
+      let span = document.querySelector('#childElement');
+
+      div.addEventListener(
+        'click',
+        function (e) {
+          // e.stopImmediatePropagation();
+          // e.stopPropagation();
+          console.log('div 捕获1');
+        },
+        true
+      );
+      div.addEventListener(
+        'click',
+        function (e) {
+          // e.stopImmediatePropagation();
+          // e.stopPropagation();
+          console.log('div 捕获2');
+        },
+        true
+      );
+      div.addEventListener('click', function (e) {
+        console.log('div 冒泡');
+      });
+
+      // div.addEventListener('click', () => {
+      //   console.log(this);
+      // });
+      span.addEventListener(
+        'click',
+        function (e) {
+          console.log('span 捕获');
+        },
+        true
+      );
+      span.addEventListener('click', function (e) {
+        console.log('span 冒泡');
+      });
+    </script> -->
+
+    <script type="x">
+      window.addEventListener('keydown', function (e) {
+        console.log(e);
+      });
+      window.addEventListener('click', function (e) {
+        console.log(e);
+      });
+    </script>
+    <!-- <div class="box">
+      <p>Move the mouse around in this box to watch its coordinates change.</p>
+      <p><code>pageX</code>: <span id="x">n/a</span></p>
+      <p><code>pageY</code>: <span id="y">n/a</span></p>
+    </div> -->
+
+    <script type="xx">
+      const box = document.querySelector('.box');
+      const pageX = document.getElementById('x');
+      const pageY = document.getElementById('y');
+
+      function updateDisplay(event) {
+        pageX.innerText = event.pageX;
+        pageY.innerText = event.pageY;
+      }
+
+      box.addEventListener('mousemove', updateDisplay, false);
+      box.addEventListener('mouseenter', updateDisplay, false);
+      box.addEventListener('mouseleave', updateDisplay, false);
+    </script>
+    <script>
+      function func(e) {
+        // console.log(event);
+        console.log(e);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function createNode(val) {
+        return {
+          val,
+          next: null
+        };
+      }
+
+      // 1.二次遍历
+      function arrayToList1(ary) {
+        if (ary.length == 0) {
+          return null;
+        }
+
+        let nodes = [];
+        for (let i = 0; i < ary.length; i++) {
+          let node = createNode(ary[i]);
+          nodes.push(node);
+        }
+        for (let j = 0; j < nodes.length - 1; j++) {
+          nodes[j].next = nodes[j + 1];
+        }
+
+        return nodes[0];
+      }
+      // arrayToList1([1, 2, 3]);
+
+      // 2.倒序
+      function arrayToList2(ary) {
+        let prev = null;
+        for (let i = ary.length - 1; i >= 0; i--) {
+          let node = createNode(ary[i]);
+          node.next = prev;
+          prev = node;
+        }
+
+        return prev;
+      }
+      arrayToList2([1, 2, 3]);
+
+      // 3. 正序
+      function arrayToList3(ary) {
+        let dummy = createNode(null);
+        let prev = dummy;
+        for (let i = 0; i < ary.length; i++) {
+          let node = createNode(ary[i]);
+          prev.next = node;
+          prev = node;
+        }
+
+        return dummy.next;
+      }
+
+      // 4.递归 是循环的变体
+      function arrayToList4(ary) {
+        if (ary.length === 0) return null;
+        let head = createNode(ary[0]);
+        head.next = arrayToList4(ary.slice(1));
+        return head;
+      }
+
+      function arrayToList5(ary, start = 0) {
+        if (start === ary.length) return null;
+        let head = createNode(ary[start]);
+        head.next = arrayToList5(ary, start + 1);
+        return head;
+      }
+
+      function listToArray(l) {
+        let result = [];
+
+        while (l) {
+          result.push(l.val);
+          l = l.next;
+        }
+
+        return result;
+      }
+
+      function listToArray2(l) {
+        if (l === null) return [];
+        // let result = [l.val]
+        let tail = l.next;
+        let tailAry = listToArray2(tail);
+        tailAry.unshift(l.val);
+        return tailAry;
+      }
+
+      function prepend(val, head) {
+        let node = createNode(val);
+        node.next = head;
+
+        return node;
+      }
+
+      function append(val, head) {
+        let newNode = createNode(val);
+        if (!head) return newNode;
+        let node = head;
+        // 1.先走到最后一个 node
+        while (node.next) {
+          node = node.next;
+        }
+        node.next = newNode;
+
+        return head;
+      }
+
+      function append2(val, head) {
+        if (head === null) return createNode(val);
+        // 此链表有一个节点
+        if (head.next === null) {
+          let node = createNode(val);
+          head.next = node;
+          return head;
+        }
+        append2(val, head.next);
+        return head;
+      }
+
+      function nth(l, idx) {
+        // 链表为空
+        if (!l) return undefined;
+        let p = l;
+
+        for (let i = 0; p.next && i < idx; i++) {
+          p = p.next;
+        }
+        if (i === idx) {
+          return p.val;
+        } else {
+          // 不满足 p.next 了 也就是没走到 idx 步时
+          return undefined;
+        }
+      }
+
+      function nth2(l, idx) {
+        if (l === null) return undefined;
+        if (idx === 0) {
+          return l.val;
+        }
+        return nth2(l.next, idx - 1);
+      }
+
+      function insert(head, val, idx) {
+        let node = createNode(val);
+        if (!head) return node;
+        // 1. 在头部插入节点
+        if (idx == 0) {
+          node.next = head;
+          return node;
+        }
+        // 2. 在 idx 处前面插入节点
+        let p = head;
+        for (let i = 1; p.next && i < idx; i++) {
+          p = p.next;
+        }
+
+        node.next = p.next;
+        p.next = node;
+
+        return head;
+      }
+
+      function insert2(head, val, idx) {
+        if (!head) return createNode(val);
+        if (head.next === null) {
+          head.next = createNode(val);
+          return head;
+        }
+        if (idx === 1) {
+          let node = createNode(val);
+          node.next = head.next;
+          head.next = node;
+          return head;
+        }
+        if (idx === 0) {
+          let node = createNode(val);
+          node.next = head;
+          return node;
+        }
+
+        insert2(head.next, val, idx - 1);
+        return head;
+      }
+
+      function del(head, idx) {
+        if (!head) return null;
+        if (idx === 0) return head.next;
+        let p = head;
+        for (let i = 0; p.next && i < idx - 1; i++) {
+          p = p.next;
+        }
+        if (i === idx - 1) {
+          p.next = p.next.next;
+        }
+
+        return head;
+      }
+    </script>
+  </body>
+</html>
